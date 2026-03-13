@@ -1,12 +1,16 @@
+import { useEffect, useRef } from 'react';
+// @ts-ignore
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+// @ts-ignore
 import { SplitText } from "gsap-trial/SplitText";
 
 interface ParaElement extends HTMLElement {
   anim?: gsap.core.Animation;
   split?: SplitText;
 }
+
+// Rest of your code continues here...
+// (keep all your existing code below this)
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
