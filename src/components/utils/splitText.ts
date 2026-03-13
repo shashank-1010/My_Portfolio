@@ -3,20 +3,23 @@ import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 // @ts-ignore
 import { SplitText } from "gsap-trial/SplitText";
+// @ts-ignore
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+// @ts-ignore
+import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
 
 interface ParaElement extends HTMLElement {
   anim?: gsap.core.Animation;
   split?: SplitText;
 }
 
-// Rest of your code continues here...
-// (keep all your existing code below this)
-
+// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 export default function setSplitText() {
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (window.innerWidth < 900) return;
+  
   const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
 
@@ -52,6 +55,7 @@ export default function setSplitText() {
       }
     );
   });
+  
   titles.forEach((title: ParaElement) => {
     if (title.anim) {
       title.anim.progress(1).kill();
