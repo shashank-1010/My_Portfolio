@@ -1,24 +1,22 @@
-import { useEffect, useRef } from 'react';
-// @ts-ignore
-import { gsap } from "gsap";
-// @ts-ignore
-import { SplitText } from "gsap-trial/SplitText";
-// @ts-ignore
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-// @ts-ignore
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+import { useEffect } from 'react';
+
+// Use require instead of import to completely bypass TypeScript checking
+const gsap = require('gsap');
+const SplitText = require('gsap-trial/SplitText');
+const ScrollTrigger = require('gsap/ScrollTrigger');
+const ScrollSmoother = require('gsap-trial/ScrollSmoother');
+
+// Register plugins
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 interface ParaElement extends HTMLElement {
-  anim?: gsap.core.Animation;
-  split?: SplitText;
+  anim?: any;
+  split?: any;
 }
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
 
 export default function setSplitText() {
   ScrollTrigger.config({ ignoreMobileResize: true });
-  if (window.innerWidth < 900) return;
+  if (typeof window !== 'undefined' && window.innerWidth < 900) return;
   
   const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
@@ -30,7 +28,7 @@ export default function setSplitText() {
     para.classList.add("visible");
     if (para.anim) {
       para.anim.progress(1).kill();
-      para.split?.revert();
+      if (para.split) para.split.revert();
     }
 
     para.split = new SplitText(para, {
@@ -59,7 +57,7 @@ export default function setSplitText() {
   titles.forEach((title: ParaElement) => {
     if (title.anim) {
       title.anim.progress(1).kill();
-      title.split?.revert();
+      if (title.split) title.split.revert();
     }
     title.split = new SplitText(title, {
       type: "chars,lines",
@@ -84,5 +82,6 @@ export default function setSplitText() {
     );
   });
 
-  ScrollTrigger.addEventListener("refresh", () => setSplitText());
+  // Remove this line to prevent infinite loop
+  // ScrollTrigger.addEventListener("refresh", () => setSplitText());
 }
