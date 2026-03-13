@@ -1,11 +1,14 @@
-// @ts-ignore
-import { SplitText } from 'gsap-trial/SplitText';
-// @ts-ignore
-import gsap from "gsap";
-// @ts-ignore
+// Use require instead of import to bypass TypeScript completely
+const gsap = require('gsap');
+const SplitText = require('gsap-trial/SplitText');
+
+// @ts-ignore - smoother from Navbar (keep this import as it's from your local file)
 import { smoother } from "../Navbar";
 
 export function initialFX() {
+  // Check if document exists (for SSR safety)
+  if (typeof document === 'undefined') return;
+  
   document.body.style.overflowY = "auto";
   smoother.paused(false);
   document.getElementsByTagName("main")[0].classList.add("main-active");
