@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,12 +12,15 @@ import { LoadingProvider } from "./context/LoadingProvider";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const App = () => {
-  // GSAP ScrollSmoother initialize karo
+  // smoother ko store karne ke liye ref use karo (instead of window)
+  const smootherRef = useRef<any>(null);
+
   useEffect(() => {
     // Thoda delay do taaki saare components load ho jayein
     const timer = setTimeout(() => {
       try {
-        const smoother = ScrollSmoother.create({
+        // smoother ko ref mein store karo
+        smootherRef.current = ScrollSmoother.create({
           smooth: 1,
           effects: true,
           normalizeScroll: true
@@ -29,12 +32,11 @@ const App = () => {
       }
     }, 1000);
 
-    // Cleanup function
+    // Cleanup function - ref se smoother kill karo
     return () => {
       clearTimeout(timer);
-      // Agar smoother variable access ho toh kill karo
-      if (window.smoother) {
-        window.smoother.kill();
+      if (smootherRef.current) {
+        smootherRef.current.kill();
       }
     };
   }, []);
