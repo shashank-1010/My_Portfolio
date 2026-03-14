@@ -31,10 +31,28 @@ declare module 'gsap-trial/SplitText' {
 
 declare module 'gsap-trial/ScrollSmoother' {
   export class ScrollSmoother {
-    static create(options: any): any;
-    paused(state?: boolean): any;
+    static create(options: {
+      wrapper?: string;
+      content?: string;
+      smooth?: number;
+      speed?: number;
+      effects?: boolean;
+      autoResize?: boolean;
+      ignoreMobileResize?: boolean;
+      [key: string]: any;
+    }): ScrollSmoother;
+    
+    scrollTop(value?: number): number | void;
+    scrollTo(target: string | number | HTMLElement, smooth?: boolean, position?: string): void;
+    paused(state?: boolean): boolean | ScrollSmoother;
+    refresh(): void;
     scrollTrigger: any;
+    progress?: number;
+    offset?: number;
+    vars?: any;
   }
+  
+  export function refresh(soft?: boolean): void;
 }
 
 declare module 'gsap/ScrollTrigger' {
@@ -42,6 +60,7 @@ declare module 'gsap/ScrollTrigger' {
   export default ScrollTrigger;
   export const config: any;
   export const addEventListener: any;
+  export function refresh(soft?: boolean): void;
 }
 
 declare module 'gsap' {
