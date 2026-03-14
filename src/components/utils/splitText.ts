@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import gsap from 'gsap-trial';
+import { gsap } from "gsap";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from 'gsap-trial/SplitText';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap-trial/ScrollSmoother';
+
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
