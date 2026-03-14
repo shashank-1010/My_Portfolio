@@ -1,5 +1,5 @@
 // Proper imports with type declarations (require hata diya)
-import gsap from 'gsap-trial';
+import { gsap } from "gsap";
 import { SplitText } from 'gsap-trial/SplitText';
 import { smoother } from "../Navbar";
 
